@@ -1,7 +1,12 @@
-values = $<.readlines.map(&:strip).map(&:chars).map { |e| e.map(&:to_i) }.transpose
-counts = values.map(&:tally)
-puts counts.map(&:entries).map { |e| e[0][1] > e[1][1] ? e[0][0] : e[1][0] }.join
+counts = $<
+    .readlines
+    .map(&:chomp)
+    .map(&:chars)
+    .transpose
+    .map(&:tally)
+    .map(&:entries)
 
+gamma = counts.map { |e| e[0][1] > e[1][1] ? e[0][0] : e[1][0] }.map(&:to_i)
+epsilon = gamma.map { 1 - _1 }
 
-#puts counts.map(&:values).map { |e| e.inject(:*) }.sum
-
+puts epsilon.join.to_i(2) * gamma.join.to_i(2)
